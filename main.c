@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <istream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -39,9 +40,47 @@ void sortear_bombas(int n) {
   }
 }
 
+/*
+ * funçao que diz se um par de coordenadas é valido ou nao
+ */
+int coordenada_valida(int l, int c) {
+  if (l >= 0 && l < tam && c >= 0 && c < tam) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+/*
+ * funçao que retorna a quantidade de bombas na vizinhança de l c
+ */
+int qtd_bombas_na_vizinhanca(int l, int c) {
+  int qtd = 0;
+  if (coordenada_valida(l - 1, c) && jogo[l - 1][c].eh_bomba) {
+    qtd++;
+  } else if (coordenada_valida(l + 1, c) && jogo[l + 1][c].eh_bomba) {
+    qtd++;
+  } else if (coordenada_valida(l, c + 1) && jogo[l][c + 1].eh_bomba) {
+    qtd++;
+  } else if (coordenada_valida(l, c - 1) && jogo[l][c - 1].eh_bomba) {
+    qtd++;
+  }
+  return qtd;
+}
+
+// procedimento para contar as bombas vizinhas
+void contar_bombas() {
+  for (l = 0; l < tam; l++) {
+    for (c = 0; c < tam; c++) {
+      jogo[l][c].vizinhos = qtd_bombas_na_vizinhanca(l, c);
+    }
+  }
+};
+
 int main(void) {
   printf("Hello, World!\n");
   inicializar_jogo();
   sortear_bombas(10);
+  contar_bombas();
   return 0;
 }
