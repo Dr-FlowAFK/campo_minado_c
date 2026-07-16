@@ -1,8 +1,9 @@
-#include <cstddef>
-#include <istream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include <time.h>
+#include <string.h>
+#include <math.h>
 
 typedef struct {
   int eh_bomba;
