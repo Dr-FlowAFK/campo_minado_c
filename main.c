@@ -1,4 +1,7 @@
+#include <cstddef>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 typedef struct {
   int eh_bomba;
@@ -21,7 +24,24 @@ void inicializar_jogo() {
   }
 }
 
+// procedimento para sortear n bombas
+void sortear_bombas(int n) {
+  int i;
+  srand(time(NULL));
+  for (i = 0; i <= n; i++) {
+    l = rand() % tam;
+    c = rand() % tam;
+    if (jogo[l][c].eh_bomba == 0) {
+      jogo[l][c].eh_bomba = 1;
+    } else {
+      i--;
+    };
+  }
+}
+
 int main(void) {
   printf("Hello, World!\n");
+  inicializar_jogo();
+  sortear_bombas(10);
   return 0;
 }
