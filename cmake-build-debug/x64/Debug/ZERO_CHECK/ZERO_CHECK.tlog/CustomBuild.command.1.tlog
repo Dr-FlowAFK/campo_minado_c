@@ -1,0 +1,10 @@
+^C:\USERS\NIKOV\CLIONPROJECTS\CAMPO_MINADO_C\CMAKE-BUILD-DEBUG\CMAKEFILES\DDEF34C1415B0BE55250203828E980FB\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Nikov/CLionProjects/campo_minado_c -BC:/Users/Nikov/CLionProjects/campo_minado_c/cmake-build-debug --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Nikov/CLionProjects/campo_minado_c/cmake-build-debug/campo_minado_c.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
