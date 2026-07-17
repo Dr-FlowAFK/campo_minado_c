@@ -103,12 +103,41 @@ void imprimir() {
     printf("\n\t  -------------------------------------------------------------\n");
   }
 }
-
+// procedimento para abrir a coordenada digitada pelo usuario
+void abrir_celula(int linha, int coluna) {
+  if (coordenada_valida(linha, coluna) && !jogo[linha][coluna].esta_aberta) {
+    jogo[linha][coluna].esta_aberta = 1;
+    if (jogo[linha][coluna].vizinhos == 0) {
+      /*
+       * l-1 e c cima
+       * l+1 e c abaixo
+       * l e c+1 direita
+       * l e c-1 esquerda
+       */
+      abrir_celula(linha - 1, coluna);
+      abrir_celula(linha + 1, coluna);
+      abrir_celula(linha, coluna + 1);
+      abrir_celula(linha, coluna - 1);
+    }
+  }
+}
+// procedimento jogar que faz a leitura das coordenadas
+void jogar() {
+  int linha , coluna;
+  do {
+    printf("\n Digite as coordenadas de linha e coluna: ");
+    scanf("%d%d", &linha, &coluna);
+    if (!coordenada_valida(linha, coluna)) {
+      printf("\n Coordenada invalida!");
+    }
+  }while (!coordenada_valida(linha, coluna) || jogo[linha][coluna].esta_aberta);
+  abrir_celula(linha, coluna);
+}
 int main(void) {
-  printf("Hello, World!\n");
   inicializar_jogo();
   sortear_bombas(10);
   contar_bombas();
+  printf("\n\t\t\t\tCAMPO MINADO");
   imprimir();
   return 0;
 }
