@@ -1,9 +1,11 @@
+
+
+#include <locale.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
-#include <time.h>
 #include <string.h>
-#include <math.h>
+#include <time.h>
 
 typedef struct {
   int eh_bomba;
@@ -77,11 +79,36 @@ void contar_bombas() {
     }
   }
 };
+// procedimento para imprimir o jogo
+void imprimir() {
+  printf("\n\n\t   ");
+  for (l = 0; l < tam; l++) {
+    printf("  %d   ", l); // indices das colunas
+  }
+  printf("\n\t  -------------------------------------------------------------\n");
+  for (l = 0; l < tam; l++) {
+    printf("\t%d | ", l);
+    for (c = 0; c < tam; c++) {
+      if (jogo[l][c].esta_aberta) {
+        if (jogo[l][c].eh_bomba) {
+          printf(" * ");
+        } else {
+          printf(" %d ", jogo[l][c].vizinhos);
+        }
+      } else {
+        printf("   ");
+      }
+      printf(" | ");
+    }
+    printf("\n\t  -------------------------------------------------------------\n");
+  }
+}
 
 int main(void) {
   printf("Hello, World!\n");
   inicializar_jogo();
   sortear_bombas(10);
   contar_bombas();
+  imprimir();
   return 0;
 }
