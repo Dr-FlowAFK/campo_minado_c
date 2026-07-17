@@ -121,23 +121,51 @@ void abrir_celula(int linha, int coluna) {
     }
   }
 }
+/*
+ * funçao para verificar vitoria
+ */
+int ganhou() {
+  int qtd = 0;
+  for (l = 0; l < tam; l++) {
+    for (c = 0; c < tam; c++) {
+      if (!jogo[l][c].esta_aberta && !jogo[l][c].eh_bomba) {
+        qtd++;
+      }
+    }
+  }
+  return qtd;
+}
 // procedimento jogar que faz a leitura das coordenadas
 void jogar() {
   int linha , coluna;
   do {
-    printf("\n Digite as coordenadas de linha e coluna: ");
-    scanf("%d%d", &linha, &coluna);
-    if (!coordenada_valida(linha, coluna)) {
-      printf("\n Coordenada invalida!");
-    }
-  }while (!coordenada_valida(linha, coluna) || jogo[linha][coluna].esta_aberta);
-  abrir_celula(linha, coluna);
+    imprimir();
+    do {
+      printf("\n Digite as coordenadas de linha e coluna: ");
+      scanf("%d%d", &linha, &coluna);
+      if (!coordenada_valida(linha, coluna)) {
+        printf("\n Coordenada invalida!");
+      }
+    }while (!coordenada_valida(linha, coluna) || jogo[linha][coluna].esta_aberta);
+    abrir_celula(linha, coluna);
+  }while (ganhou() != 0 && jogo[linha][coluna].eh_bomba == 0);
+  imprimir();
+  if (jogo[linha][coluna].eh_bomba == 1) {
+    printf("\t Que pena! Voce perdeu!!!\n");
+  }else {
+    printf("\t PARABENS VOCE GANHOU!!!\n");
+  }
 }
 int main(void) {
-  inicializar_jogo();
-  sortear_bombas(10);
-  contar_bombas();
-  printf("\n\t\t\t\tCAMPO MINADO");
-  imprimir();
+  int opcao;
+  do {
+    inicializar_jogo();
+    sortear_bombas(10);
+    contar_bombas();
+    printf("\n\t\t\t\tCAMPO MINADO");
+    jogar();
+    printf("\n Digite 1 para jogar novamente: ");
+    scanf("%d", &opcao);
+  }while (opcao == 1);
   return 0;
 }
