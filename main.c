@@ -59,15 +59,23 @@ int coordenada_valida(int l, int c) {
  */
 int qtd_bombas_na_vizinhanca(int l, int c) {
   int qtd = 0;
+
   if (coordenada_valida(l - 1, c) && jogo[l - 1][c].eh_bomba) {
     qtd++;
-  } else if (coordenada_valida(l + 1, c) && jogo[l + 1][c].eh_bomba) {
-    qtd++;
-  } else if (coordenada_valida(l, c + 1) && jogo[l][c + 1].eh_bomba) {
-    qtd++;
-  } else if (coordenada_valida(l, c - 1) && jogo[l][c - 1].eh_bomba) {
+  }
+
+  if (coordenada_valida(l + 1, c) && jogo[l + 1][c].eh_bomba) {
     qtd++;
   }
+
+  if (coordenada_valida(l, c + 1) && jogo[l][c + 1].eh_bomba) {
+    qtd++;
+  }
+
+  if (coordenada_valida(l, c - 1) && jogo[l][c - 1].eh_bomba) {
+    qtd++;
+  }
+
   return qtd;
 }
 
@@ -143,8 +151,8 @@ void jogar() {
     do {
       printf("\n Digite as coordenadas de linha e coluna: ");
       scanf("%d%d", &linha, &coluna);
-      if (!coordenada_valida(linha, coluna)) {
-        printf("\n Coordenada invalida!");
+      if (!coordenada_valida(linha, coluna)|| jogo[linha][coluna].esta_aberta) {
+        printf("\n Coordenada invalida ou ja aberta!");
       }
     }while (!coordenada_valida(linha, coluna) || jogo[linha][coluna].esta_aberta);
     abrir_celula(linha, coluna);
@@ -160,7 +168,7 @@ int main(void) {
   int opcao;
   do {
     inicializar_jogo();
-    sortear_bombas(10);
+    sortear_bombas(2);
     contar_bombas();
     printf("\n\t\t\t\tCAMPO MINADO");
     jogar();
